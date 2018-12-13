@@ -39,7 +39,6 @@ export class UriTemplate extends HTMLElement {
                 </fieldset>
                 <input type="submit" />
             </form>
-            <br/>
             ${this.resource && html`<h-endpoint .resource=${this.resource}>`}
         `, this.shadow);
     }
