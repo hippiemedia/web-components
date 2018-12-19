@@ -3,7 +3,7 @@ import {html, render, repeat, agent} from './index.js';
 export class StaticEndpoint extends HTMLElement {
     constructor() {
         super();
-        this.shadow = this.attachShadow({mode: 'open'});
+        this.root = this.attachShadow({mode: 'open'});
     }
 
     static get observedAttributes() { return ['url', 'title', 'description']; }
@@ -21,13 +21,13 @@ export class StaticEndpoint extends HTMLElement {
             <link rel="stylesheet" href="/css/endpoint.css"/>
 
             <pre><code>
-                <slot name="state" />
+                <slot name="state"></slot>
             </code></pre>
 
-            <slot name="links" />
+            <slot name="links"></slot>
 
-            <slot name="operations" />
-        `, this.shadow);
+            <slot name="operations"></slot>
+        `, this.root);
     }
 }
 

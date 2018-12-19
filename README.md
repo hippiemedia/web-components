@@ -2,7 +2,7 @@
 
 ## what
 
-A set of web components to represent API endpoints.
+A set of web components to represent API endpoints.
 
 ## how
 
@@ -24,7 +24,7 @@ A set of web components to represent API endpoints.
             </div>
             <div slot="operations">
                 <h-static-operation url="/items" method="post" title="Add a new item">
-                    <h-field name="name" title="item's name" />                
+                    <h-field name="name" title="item's name" />
                 </h-static-operation>
             </div>
         </h-static-endpoint>
@@ -36,7 +36,7 @@ A set of web components to represent API endpoints.
 
 Writing endpoints declarations by hand is tedious, and not very maintainable.
 That's why it's a good idea to generate them programatically.
-This will recursively render endpoints declarations as you navigate the api,
+This will recursively render endpoints declarations as you navigate any [supported](https://github.com/hippiemedia/agent/tree/master/src/adapter) api,
 effectively making this simple piece of html an actual hypermedia browser! \o/
 
 ```html

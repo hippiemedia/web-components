@@ -3,7 +3,7 @@ import {html, render, repeat} from './index.js';
 export class StaticOperation extends HTMLElement {
     constructor() {
         super();
-        this.shadow = this.attachShadow({mode: 'open'});
+        this.root = this.attachShadow({mode: 'open'});
     }
 
     static get observedAttributes() { return ['url', 'title', 'method']; }
@@ -24,22 +24,23 @@ export class StaticOperation extends HTMLElement {
                 <h3>${this.getAttribute('title')}</h3>
                 <span class="${this.getAttribute('method')}">${this.getAttribute('method')}</span>
                 <span class="url">${this.getAttribute('href')}</span>
-                <p slot="description"></p>
-                <div slot="fields"></div>
+                <slot name="description"></slot>
+                <slot name="fields"></slot>
+                <slot name="links"></slot>
                 <input type="submit" />
             </form>
             <slot name="resource"></slot>
-        `, this.shadow);
+        `, this.root);
     }
 
     onSubmit(event)
     {
         event.preventDefault();
-        let data = new FormData(event.currentTarget);
-        let params = Array.from(data.entries()).filter(([key, value]) => value).reduce((acc, [key, value]) => ({
+        let slot = this.root.querySelector('slot[name=fields]');
+        let params = Array.from(slot.assignedNodes()[0].querySelectorAll('input')).filter(input => input.value).reduce((acc, input) => ({
             ...acc,
-            [key]: value,
-        }), {})
+            [input.name]: input.value,
+        }), {});
 
         this.dispatchEvent(new CustomEvent('operation-submitted', {
             detail: params,

@@ -3,7 +3,7 @@ import {html, render, repeat} from './index.js';
 export class StaticLink extends HTMLElement {
     constructor() {
         super();
-        this.shadow = this.attachShadow({mode: 'open'});
+        this.root = this.attachShadow({mode: 'open'});
     }
 
     connectedCallback() {
@@ -22,21 +22,21 @@ export class StaticLink extends HTMLElement {
                 <h3>${this.getAttribute('title')}</h3>
                 <span>GET</span>
                 <span class="url">${this.getAttribute('href')}</span>
-                <slot="description"/>
-                <div slot="fields"></div>
+                <slot="description"></slot>
+                <slot name="fields"></slot>
                 <input type="submit" value="Follow" />
             </form>
-            <slot name="resource"/>
-        `, this.shadow);
+            <slot name="resource"></slot>
+        `, this.root);
     }
 
     onFollow(event)
     {
         event.preventDefault();
-        let data = new FormData(event.currentTarget);
-        let params = Array.from(data.entries()).filter(([key, value]) => value).reduce((acc, [key, value]) => ({
+        let slot = this.root.querySelector('slot[name=fields]');
+        let params = Array.from(slot.assignedNodes()[0].querySelectorAll('input')).filter(input => input.value).reduce((acc, input) => ({
             ...acc,
-            [key]: value,
+            [input.name]: input.value,
         }), {});
 
         this.dispatchEvent(new CustomEvent('link-followed', {

@@ -6,7 +6,7 @@ import {Operation} from './operation.js';
 export class Endpoint extends HTMLElement {
     constructor() {
         super();
-        this.shadow = this.attachShadow({mode: 'open'});
+        this.root = this.attachShadow({mode: 'open'});
 
         this.agent = agent();
         this.resource = null;
@@ -38,7 +38,7 @@ export class Endpoint extends HTMLElement {
                     )}
                 </div>
             </h-static-endpoint>`}
-        `, this.shadow);
+        `, this.root);
     }
 }
 

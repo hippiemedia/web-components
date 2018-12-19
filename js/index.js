@@ -5,7 +5,7 @@ import {Endpoint} from './endpoint.js';
 
 export function agent() {
     return window['@hippiemedia/agent'](client => (method, url, params, headers) => {
-        return client(method, url, params, {Authorization: '470f535c-58a3-4058-a89a-c42da7427c68', ...headers})
+        return client(method, url, params, {Authorization: 'Bearer 3a03e510-4e61-42f9-97f2-41df472ed993', ...headers})
     });
 }
 

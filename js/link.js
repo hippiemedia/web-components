@@ -6,7 +6,7 @@ import {Field} from './field.js';
 export class Link extends HTMLElement {
     constructor() {
         super();
-        this.shadow = this.attachShadow({mode: 'open'});
+        this.root = this.attachShadow({mode: 'open'});
 
         this.link = null;
         this.resource = null;
@@ -29,7 +29,7 @@ export class Link extends HTMLElement {
                 )}
             </div>
             ${this.resource && html`<h-endpoint .resource=${this.resource} slot="resource" />`}
-        </h-static-link>`, this.shadow);
+        </h-static-link>`, this.root);
     }
 
     async onFollow(event)

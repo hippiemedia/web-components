@@ -3,7 +3,7 @@ import {html, render, repeat} from './index.js';
 export class Field extends HTMLElement {
     constructor() {
         super();
-        this.shadow = this.attachShadow({mode: 'open'});
+        this.root = this;
 
         this.field = null;
     }
@@ -26,7 +26,7 @@ export class Field extends HTMLElement {
                     multiple=${this.field.multiple}
                 />
             </label>
-        `, this.shadow);
+        `, this.root);
     }
 }
 

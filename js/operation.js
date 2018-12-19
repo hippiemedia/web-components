@@ -6,7 +6,7 @@ import {Field} from './field.js';
 export class Operation extends HTMLElement {
     constructor() {
         super();
-        this.shadow = this.attachShadow({mode: 'open'});
+        this.root = this.attachShadow({mode: 'open'});
 
         this.operation = null;
         this.resource = null;
@@ -17,7 +17,7 @@ export class Operation extends HTMLElement {
     }
 
     render() {
-        render(html`<h-static-operation url="${this.operation.url}" title="${this.operation.title}" method="${this.operation.method}" @operation-submit=${this.onSubmit.bind(this)}>
+        render(html`<h-static-operation href="${this.operation.href}" title="${this.operation.title}" method="${this.operation.method}" @operation-submitted=${this.onSubmit.bind(this)}>
             <div slot="description">${this.operation.description}</div>
             <div slot="fields">
                 ${repeat(
@@ -27,7 +27,7 @@ export class Operation extends HTMLElement {
                 )}
             </div>
             ${this.resource && html`<h-endpoint .resource=${this.resource} slot="resource" />`}
-        </h-static-operation>`, this.shadow);
+        </h-static-operation>`, this.root);
     }
 
     async onSubmit(event)
