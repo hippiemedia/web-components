@@ -22,7 +22,7 @@ export class Endpoint extends HTMLElement {
     render() {
         render(html`
             ${this.resource && html`<h-static-endpoint url="${this.resource.url}" title="${this.resource.title}">
-                <div slot="state">${this.resource.response.body}</div>
+                <pre slot="response-body">${this.resource.response.body}</pre>
                 <div slot="links">
                     ${repeat(
                         this.resource.links,

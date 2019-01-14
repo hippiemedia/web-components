@@ -20,14 +20,20 @@ export class StaticEndpoint extends HTMLElement {
         render(html`
             <link rel="stylesheet" href="/css/endpoint.css"/>
 
-            <pre><code>
-                <slot name="state"></slot>
-            </code></pre>
+            <pre>
+                <code>
+                    <slot @slotchange=${this.pretty.bind(this)} name="response-body"></slot>
+                </code>
+            </pre>
 
             <slot name="links"></slot>
 
             <slot name="operations"></slot>
         `, this.root);
+    }
+
+    pretty(event) {
+        Array.from(event.target.assignedNodes()).map(node => node.textContent = try_json(node.textContent));
     }
 }
 
