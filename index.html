@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <script src="/node_modules/@hippiemedia/agent/bundle/index.js"></script>
-        <script async type="module" src="/js/index.js"></script>
+        <script async type="module" src="/js/agent-endpoint.js"></script>
         <meta charset="UTF-8" />
         <title>Custom Elements!</title>
         <link rel="icon" href="data:,">
@@ -10,6 +10,18 @@
         <link type="text/css" rel="stylesheet" href="/css/index.css" />
     </head>
     <body>
-        <h-endpoint root />
+        <form method="GET" id="entrypoint-form">
+            <input type="url" id="entrypoint" placeholder="API entrypoint" value="https://pim-ai.preprod.cloud.akeneo.com/accounting/"/>
+            <input type="submit" value="Discover"/>
+        </form>
+
+        <h-agent-endpoint />
+
+        <script async>
+            document.querySelector('#entrypoint-form').addEventListener('submit', event => {
+                event.preventDefault();
+                document.querySelector('h-agent-endpoint').setAttribute('url', document.querySelector('#entrypoint').value);
+            });
+        </script>
     </body>
 </html>

@@ -1,0 +1,113 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 0;
+    padding: 20px;
+    position: relative;
+    background: #fff;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 60px;
+    padding-right: 60px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    width: calc(100% - 40px);
+    min-width: 450px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    max-width: 720px;
+    border-radius: 3px;
+}
+
+:host h-link, :host h-operation {
+    border: 1px #D9DDE2 solid;
+    border-color: rgba(217, 221, 226, 0.4);
+    box-shadow: none;
+    margin: 20px 0 0 0;
+    width: 100%;
+}
+
+:host .method {
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+:host .method.GET {
+    background: #67B373;
+}
+
+:host .method.POST, :host .method.PUT {
+    background: #5992C7;
+}
+
+:host .method.DELETE {
+    background: #C92343;
+}
+
+:host .title {
+    font-size: 16px;
+    text-transform: uppercase;
+    margin: 0 0 14px 0;
+    color: #5DA8A6;
+    font-weight: normal;
+}
+
+:host .title a:hover {
+    border-bottom: 1px #5DA8A6 solid;
+}
+
+:host .description {
+    line-height: 24px;
+    color: #67768A;
+}
+
+:host .description:first-letter {
+    text-transform: uppercase;
+}
+
+:host .url {
+    color: #67768A;
+    font-family: monospace;
+    line-height: 26px;
+}
+
+:host form p {
+    color: #11324D;
+}
+
+:host form input {
+    margin-bottom: 16px;
+    border: 1px #D9DDE2 solid;
+    padding: 10px;
+    width: 250px;
+}
+
+:host form input[type="submit"] {
+    width: auto;
+    padding: 10px 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+:host form label {
+    margin-right: 8px;
+    color: #67768A;
+    min-width: 110px;
+    display: inline-block;
+    font-family: monospace;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+:host form label input {
+    margin-left: 10px;
+}

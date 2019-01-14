@@ -1,40 +1,61 @@
 import {html, render, repeat} from './index.js';
 
-import {StaticOperation} from './static-operation.js';
-import {Field} from './field.js';
-
 export class Operation extends HTMLElement {
     constructor() {
         super();
         this.root = this.attachShadow({mode: 'open'});
-
-        this.operation = null;
-        this.resource = null;
     }
 
-    async connectedCallback() {
+    static get observedAttributes() { return ['url', 'title', 'method']; }
+
+    attributeChangedCallback(name, old, val) {
+        this.render();
+    }
+
+    connectedCallback() {
         this.render();
     }
 
     render() {
-        render(html`<h-static-operation href="${this.operation.href}" title="${this.operation.title}" method="${this.operation.method}" @operation-submitted=${this.onSubmit.bind(this)}>
-            <div slot="description">${this.operation.description}</div>
-            <div slot="fields">
-                ${repeat(
-                    this.operation.fields,
-                    (field, key) => key,
-                    field => html`<h-field .field=${field} />`
-                )}
-            </div>
-            ${this.resource && html`<h-endpoint .resource=${this.resource} slot="resource" />`}
-        </h-static-operation>`, this.root);
+        render(html`
+            <link rel="stylesheet" href="/css/shared.css"/>
+            <link rel="stylesheet" href="/css/operation.css"/>
+            <form novalidate action="${this.getAttribute('href')}" method="${html_method(this.getAttribute('method'))}" @submit=${this.onSubmit.bind(this)}>
+                <input type="hidden" name="_method" value="${this.getAttribute('method')}" />
+                <h3>${this.getAttribute('title')}</h3>
+                <span class="method ${this.getAttribute('method')}">${this.getAttribute('method')}</span>
+                <span class="url">${this.getAttribute('href')}</span>
+                <slot name="description"></slot>
+                <slot name="fields"></slot>
+                <slot name="links"></slot>
+                <input type="submit" value="Submit operation" />
+            </form>
+            <slot name="resource"></slot>
+        `, this.root);
     }
 
-    async onSubmit(event)
+    onSubmit(event)
     {
-        this.resource = await this.operation.submit(event.detail);
-        this.render();
+        event.preventDefault();
+        let slot = this.root.querySelector('slot[name=fields]');
+        let params = Array.from(slot.assignedNodes()[0].querySelectorAll('input')).filter(input => input.value).reduce((acc, input) => ({
+            ...acc,
+            [input.name]: input.value,
+        }), {});
+
+        this.dispatchEvent(new CustomEvent('operation-submitted', {
+            detail: params,
+            bubbles: false,
+            composed: true,
+        }));
     }
+}
+
+function html_method(method) {
+    if (method && method.toLowerCase() === 'get') {
+        return 'GET';
+    }
+    return 'POST';
 }
 
 customElements.define('h-operation', Operation);

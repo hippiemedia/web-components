@@ -4,26 +4,30 @@ export class Field extends HTMLElement {
     constructor() {
         super();
         this.root = this;
-
-        this.field = null;
     }
 
     async connectedCallback() {
         this.render();
     }
 
+    static get observedAttributes() { return ['href', 'name', 'description', 'type', 'value', 'required', 'example', 'multiple']; }
+
+    attributeChangedCallback(name, old, val) {
+        this.render();
+    }
+
     render() {
         render(html`
-            <p>${this.field.description}</p>
+            <p class="description">${this.getAttribute('description')}</p>
             <label>
-                ${this.field.name}
+                ${this.getAttribute('name')}
                 <input
-                    required=${this.field.required}
-                    type=${this.field.type}
-                    value=${this.field.value || ''}
-                    name=${this.field.name}
-                    placeholder=${this.field.example || this.field.name}
-                    multiple=${this.field.multiple}
+                    required=${this.getAttribute('required')}
+                    type=${this.getAttribute('type')}
+                    value=${this.getAttribute('value') || ''}
+                    name=${this.getAttribute('name')}
+                    placeholder=${this.getAttribute('example') || this.getAttribute('name')}
+                    multiple=${this.getAttribute('multiple')}
                 />
             </label>
         `, this.root);

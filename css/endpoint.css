@@ -1,19 +1,12 @@
-pre {
-    max-height: 300px;
-    overflow-y: auto;
-    border: 1px dotted grey;
+:host pre {
+    background-color: #F9F9FB;
+    border-radius: 3px;
+    padding: 20px;
+    color: #67768A;
+    white-space: pre-wrap;
+    font-family: monospace;
+    margin: 20px 0 0 0;
+    max-height: 500px;
+    overflow: auto;
 }
 
-:host {
-    display: block;
-    color: green;
-    padding: 10px;
-    margin: 10px;
-    border: 1px solid black;
-}
-
-:host[root] {
-    padding: 0px;
-    margin: 0px;
-    border: 0px;
-}
