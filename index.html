@@ -12,6 +12,7 @@
     <body>
         <form method="GET" id="entrypoint-form">
             <input type="url" id="entrypoint" placeholder="API entrypoint" value="https://pim-ai.preprod.cloud.akeneo.com/accounting/"/>
+            <input type="password" id="authorization" placeholder="Authorization header"/>
             <input type="submit" value="Discover"/>
         </form>
 
@@ -21,6 +22,7 @@
             document.querySelector('#entrypoint-form').addEventListener('submit', event => {
                 event.preventDefault();
                 document.querySelector('h-agent-endpoint').setAttribute('url', document.querySelector('#entrypoint').value);
+                document.querySelector('h-agent-endpoint').setAttribute('authorization', document.querySelector('#authorization').value);
             });
         </script>
     </body>

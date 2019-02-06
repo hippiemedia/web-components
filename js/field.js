@@ -20,7 +20,7 @@ export class Field extends HTMLElement {
         render(html`
             <p class="description">${this.getAttribute('description')}</p>
             <label>
-                ${this.getAttribute('name')}
+                ${this.getAttribute('title')}
                 <input
                     required=${this.getAttribute('required')}
                     type=${this.getAttribute('type')}

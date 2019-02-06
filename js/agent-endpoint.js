@@ -3,9 +3,9 @@ import {Endpoint} from './endpoint.js';
 import {AgentLink} from './agent-link.js';
 import {AgentOperation} from './agent-operation.js';
 
-export function agent() {
+export function agent(authorization) {
     return window['@hippiemedia/agent'](client => (method, url, params, headers) => {
-        return client(method, url, params, {Authorization: 'Bearer ', ...headers})
+        return client(method, url, params, {Authorization: authorization, ...headers})
     });
 }
 
@@ -14,14 +14,15 @@ export class AgentEndpoint extends HTMLElement {
         super();
         this.root = this.attachShadow({mode: 'open'});
 
-        this.agent = agent();
+        this.agent = agent('');
         this.resource = null;
     }
 
-    static get observedAttributes() { return ['url']; }
+    static get observedAttributes() { return ['url', 'authorization']; }
 
     async attributeChangedCallback(name, old, val) {
-        this.resource = await this.agent.follow(val);
+        if(name === 'url') this.resource = await this.agent.follow(val);
+        if(name === 'authorization') this.agent = agent(val);
         this.render();
     }
 
@@ -30,8 +31,11 @@ export class AgentEndpoint extends HTMLElement {
     }
 
     render() {
-        render(html`
-            ${this.resource && html`<h-endpoint
+        if (!this.isConnected) {
+            return;
+        }
+        this.resource && render(html`
+            <h-endpoint
                 method="${this.resource.method}"
                 url="${this.resource.url}"
                 title="${this.resource.title}"
@@ -52,7 +56,7 @@ export class AgentEndpoint extends HTMLElement {
                         operation => html`<h-agent-operation .operation=${operation} />`
                     )}
                 </div>
-            </h-endpoint>`}
+            </h-endpoint>
         `, this.root);
     }
 }

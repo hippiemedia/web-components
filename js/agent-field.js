@@ -18,6 +18,7 @@ export class AgentField extends HTMLElement {
                 type=${this.field.type}
                 value=${this.field.value || ''}
                 name=${this.field.name}
+                title=${this.field.title || this.field.name }
                 placeholder=${this.field.example || this.field.name}
                 multiple=${this.field.multiple}
             />

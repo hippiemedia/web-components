@@ -7,12 +7,6 @@ export class Endpoint extends HTMLElement {
 
     }
 
-    static get observedAttributes() { return ['method', 'url', 'title', 'description']; }
-
-    attributeChangedCallback(name, old, val) {
-        this.render();
-    }
-
     connectedCallback() {
         this.render();
     }
@@ -25,29 +19,13 @@ export class Endpoint extends HTMLElement {
                 <summary>
                     view source
                 </summary>
-                <pre><slot @slotchange=${this.pretty.bind(this)} name="response-body"></slot></pre>
+                <pre><slot name="response-body"></slot></pre>
             </details>
 
             <slot name="links"></slot>
 
             <slot name="operations"></slot>
         `, this.root);
-    }
-
-    pretty(event) {
-        Array.from(event.target.assignedNodes()).map(node => node.textContent = try_json(node.textContent));
-    }
-}
-
-function try_json(json) {
-    try {
-        if (typeof json === 'string') {
-            json = JSON.parse(json);
-        }
-        return JSON.stringify(json, null, 2);
-    }
-    catch(e) {
-        return json;
     }
 }
 
